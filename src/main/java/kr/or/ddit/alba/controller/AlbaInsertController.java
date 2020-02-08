@@ -1,0 +1,95 @@
+package kr.or.ddit.alba.controller;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.beanutils.BeanUtils;
+
+import kr.or.ddit.alba.dao.AlbaDAOImpl;
+import kr.or.ddit.alba.dao.IAlbaDAO;
+import kr.or.ddit.alba.service.AlbaServiceImpl;
+import kr.or.ddit.alba.service.IAlbaService;
+import kr.or.ddit.enumpkg.ServiceResult;
+import kr.or.ddit.hint.InsertHint;
+import kr.or.ddit.mvc.annotation.CommandHandler;
+import kr.or.ddit.mvc.annotation.HttpMethod;
+import kr.or.ddit.mvc.annotation.URIMapping;
+import kr.or.ddit.validator.GeneralValidator;
+import kr.or.ddit.vo.AlbaVO;
+
+@CommandHandler
+public class AlbaInsertController {
+	
+	IAlbaService service = new AlbaServiceImpl();
+	IAlbaDAO dao = new AlbaDAOImpl();
+	
+	private void addAttribute(HttpServletRequest req){
+		
+		req.setAttribute("gradeList", dao.selectGrade());
+		req.setAttribute("licenseList", dao.selectLIC());
+	}
+	
+	@URIMapping("/alba/albaInsert.do")
+	public String insertForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		addAttribute(req);
+		return "alba/albaForm";
+	}
+	
+	@URIMapping(value = "/alba/albaInsert.do", method = HttpMethod.POST)
+	public String insert(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+		
+		req.setCharacterEncoding("UTF-8");
+		AlbaVO alba = new AlbaVO();
+		req.setAttribute("alba", alba);
+		
+		try {
+			BeanUtils.populate(alba, req.getParameterMap());
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			throw new RuntimeException(e);
+		}
+		
+		Map<String, List<CharSequence>> errors = new HashMap<>(); //한번에 여러개의 메세지
+		req.setAttribute("errors", errors); 
+		GeneralValidator validator = new GeneralValidator();
+		boolean valid = validator.validate(alba, errors, InsertHint.class);
+		String goPage = null;
+		String message = null;
+		HttpSession session = req.getSession();
+		if(valid) {
+			ServiceResult result = service.createAlba(alba);
+			switch (result) {
+				case OK:
+					goPage = "redirect:/alba/albaView.do?who="+alba.getAl_id();
+					break;
+				case PKDUPLICATED:
+					goPage = "/alba/albaForm";
+					message = "아이디 중복";
+					break;
+				case FAIL:
+					goPage = "/alba/albaForm";
+					message = "서버 오류";
+					break;
+			}
+		}else {
+			goPage = "/alba/albaForm";
+		}
+		req.setAttribute("message", message);//request에 저장
+		return goPage;
+	}
+}
+
+
+
+
+
+
+
+

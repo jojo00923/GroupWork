@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.board.dao.IAttatchDAO">
+	
+	<insert id="insertAttatch" parameterType="boardVO" > <!-- selectKey는 딱 한번 시행됨 -->
+		<selectKey resultType="int" keyProperty="startAttNo" order="BEFORE">
+			SELECT NVL(MAX(ATT_NO),0)+1 FROM ATTATCH
+		</selectKey>
+		INSERT ALL
+		<foreach collection="attatchList" item="attatch" index="idx">
+			INTO ATTATCH (
+			    ATT_NO,   BO_NO,   ATT_SAVENAME,
+			    ATT_FILENAME,   ATT_SIZE,   ATT_FANCY,   ATT_MIME
+			) VALUES (
+				#{startAttNo}+ #{idx}, #{bo_no}, #{attatch.att_savename}, 
+				#{attatch.att_filename}, #{attatch.att_size},
+				#{attatch.att_fancy}, #{attatch.att_mime}
+			)
+		</foreach>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<delete id="deleteAttatch" parameterType="boardVO">
+		DELETE FROM ATTATCH
+		WHERE ATT_NO IN 
+		<foreach collection="delAttNos" item="attNo" open="(" separator="," close=")">
+			#{attNo}
+		</foreach>
+	</delete>
+	
+</mapper>

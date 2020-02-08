@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	</head>
+	<body>
+		<select id="videoSelect">
+			<option value="">동영상선택</option>
+			%option
+		</select>
+		<br />
+		<video id="videoTag" controls />
+		<script type="text/javascript">
+			var videoTag = $("#videoTag");
+			$("#videoSelect").on("change", function(event){
+				var value = $(this).val();
+				var src = "../video.do?video=" +value;
+				videoTag.attr("src", src);
+				videoTag[0].play();
+			})
+		</script>
+	</body>
+</html>

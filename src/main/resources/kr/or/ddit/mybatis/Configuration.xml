@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <properties resource="kr/or/ddit/db/dbInfo.properties"/>
+  <typeAliases>
+  	<package name="kr.or.ddit.vo"/> <!-- 클래스의 이름으로 잠재적으로 alias처리됨 -->
+  	<!-- vo에 직접 @Alias("memberVO")를 쓰면 따로 커스텀 alias 생성하지 않아도 된다. -->
+  </typeAliases>
+  <environments default="development">
+  
+  <!-- connection생성 및 트랜잭션 관리(commit) -->
+    <environment id="development">
+      <transactionManager type="JDBC"/> <!-- 얘가 자동롤백함 -->
+      <dataSource type="POOLED">
+        <property name="driver" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
+        <property name="poolMaximumActiveConnections" value="${maxTotal}"/>
+        <property name="poolTimeToWait" value="${maxWait}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  
+  <mappers>
+    <mapper resource="kr/or/ddit/mybatis/mappers/Member.xml"/>
+    <mapper resource="kr/or/ddit/mybatis/mappers/Prod.xml"/>
+    <mapper resource="kr/or/ddit/mybatis/mappers/Others.xml"/>
+    <mapper resource="kr/or/ddit/mybatis/mappers/Buyer.xml"/>
+    <mapper resource="kr/or/ddit/mybatis/mappers/BuyerOthers.xml"/>
+    <mapper resource="kr/or/ddit/mybatis/mappers/Board.xml"/>
+    <mapper resource="kr/or/ddit/mybatis/mappers/Attatch.xml"/>
+    <mapper resource="kr/or/ddit/mybatis/mappers/Alba.xml"/>
+  </mappers>
+</configuration>

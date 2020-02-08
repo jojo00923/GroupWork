@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.buyer.dao.IBuyerDAO">
+	<sql id="searchFrag"> <!-- 중복되는 코드를 넣는다. -->
+	<trim prefix=" WHERE " prefixOverrides="AND"> <!--아래 쿼리에서 AND가 잘못 들어가 있을 경우 제거됨 -->
+			<if test="searchDetail!=null">
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchDetail.buyer_id)">
+				<!-- OGNL언어 @class@method(args).  검색키워드가 있으면..-->
+					BUYER_ID = #{searchDetail.buyer_id}
+				</if>
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchDetail.buyer_add1)">
+					AND INSTR(BUYER_ADD1 ,#{searchDetail.buyer_add1}) > 0
+				</if>
+				<if test="@org.apache.commons.lang3.StringUtils@isNotBlank(searchDetail.lprod_gu)">
+					AND BUYER_LGU = #{searchDetail.lprod_gu}
+				</if>
+				
+			</if>
+	</trim>
+	</sql>
+	
+	
+	<select id="selectBuyerList" resultType="buyerVO" parameterType="PagingVO">
+ 		SELECT A.*
+		FROM
+		(SELECT BUYER_ID, BUYER_NAME, BUYER_BANK, BUYER_ADD1, BUYER_ADD2, BUYER_COMTEL,ROWNUM RN
+		FROM BUYER
+		<include refid="searchFrag"></include>
+		) A
+    	WHERE RN BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	<select id="selectBuyerCount" resultType="int" parameterType="PagingVO">
+		SELECT COUNT(*)
+		FROM BUYER
+		<include refid="searchFrag"></include>
+	</select>
+	
+	
+	
+	<resultMap type="buyerVO" id="buyerMap" autoMapping="true">
+	<id property="buyer_id" column="BUYER_ID"/>
+		<collection property="prodList" javaType="java.util.List"
+			ofType="prodVO" autoMapping="true"/>
+	</resultMap>
+	<select id="selectBuyer" resultMap="buyerMap"  parameterType="string">
+		SELECT BUYER.* , PROD_NAME, PROD_COST, PROD_PRICE
+		FROM BUYER LEFT OUTER JOIN PROD
+		ON BUYER_ID = PROD_BUYER 
+		WHERE BUYER_ID= #{buyer_id}
+	</select>
+	
+	<insert id="insertBuyer" parameterType="BuyerVO">
+	<selectKey resultType="string" keyProperty="buyer_id" order="BEFORE">
+			<!-- PK생성후 PROD_ID에 값 세팅 -->
+			SELECT #{buyer_lgu} || LPAD(TO_NUMBER(NVL(SUBSTR(MAX(BUYER_ID),5),'0')) + 1,2,'0')
+			FROM BUYER
+			WHERE BUYER_LGU = #{buyer_lgu}
+		</selectKey>
+
+	INSERT INTO buyer (
+		BUYER_ID, BUYER_NAME,	BUYER_LGU,	BUYER_BANK,
+		BUYER_BANKNO,BUYER_BANKNAME,	BUYER_ZIP,
+		BUYER_ADD1,	BUYER_ADD2,	BUYER_COMTEL,
+		BUYER_FAX,	BUYER_MAIL,	BUYER_CHARGER,
+		BUYER_TELEXT
+	) VALUES (
+		#{buyer_id}, #{buyer_name,jdbcType=VARCHAR},	#{buyer_lgu,jdbcType=VARCHAR},
+		#{buyer_bank},	#{buyer_bankno},	#{buyer_bankname},
+		#{buyer_zip},	#{buyer_add1},	#{buyer_add2},
+		#{buyer_comtel,jdbcType=VARCHAR},	#{buyer_fax,jdbcType=VARCHAR},	#{buyer_mail,jdbcType=VARCHAR},
+		#{buyer_charger},	#{buyer_telext}
+	)
+	          
+		
+	</insert>
+	
+	<update id="updateBuyer" parameterType="buyerVO" >
+	UPDATE BUYER
+	SET
+	BUYER_NAME = #{buyer_name},
+	BUYER_LGU = #{buyer_lgu},
+	BUYER_BANK = #{buyer_bank},
+	BUYER_BANKNO = #{buyer_bankno},
+	BUYER_BANKNAME = #{buyer_bankname},
+	BUYER_ZIP = #{buyer_zip},
+	BUYER_ADD1 = #{buyer_add1},
+	BUYER_ADD2 = #{buyer_add2},
+	BUYER_COMTEL = #{buyer_comtel},
+	BUYER_FAX = #{buyer_fax},
+	BUYER_MAIL = #{buyer_mail},
+	BUYER_CHARGER = #{buyer_charger},
+	BUYER_TELEXT = #{buyer_telext}
+	WHERE BUYER_ID = #{buyer_id}
+	</update>
+	
+	
+
+</mapper>
