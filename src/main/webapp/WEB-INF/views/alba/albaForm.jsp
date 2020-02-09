@@ -62,8 +62,8 @@ ${errors}
 		<tr>
 			<th>성별</th>
 			<td>
-				<input type="radio" name="al_gen" value="F" />남
-				<input type="radio" name="al_gen" value="M" />여
+				<input type="radio" name="al_gen"  value="M" />남
+				<input type="radio" name="al_gen"  value="F" />여
 			</td>
 		</tr>
 		<tr>
@@ -126,6 +126,8 @@ ${errors}
 	</table>
 </form>
 <script>
+
+
 	$(function(){
 		$(document).on('click', '.lic-add', function(){
 			var licSize;
