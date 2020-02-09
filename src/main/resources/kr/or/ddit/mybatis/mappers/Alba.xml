@@ -62,13 +62,6 @@
 	            LEFT JOIN LICENSE D ON (C.LIC_CODE = D.LIC_CODE)
 	WHERE A.AL_ID = #{al_id}
 </select>
-<select id="selectLicAlbaListById" parameterType="string" resultType="licAlbaVO">
-	SELECT AL_ID,AL_NAME,AL_AGE,AL_ADDRESS,
-		   AL_HP,AL_SPEC,A.GR_CODE,B.GR_NAME,AL_CAREER,
-		   AL_GEN,AL_BTYPE,AL_MAIL
-	FROM ALBA A JOIN GRADE B ON (A.GR_CODE = B.GR_CODE)
-	WHERE AL_ID = #{al_id}
-</select>
 
 <insert id="insertAlba" parameterType="albaVO">
 	<selectKey resultType="string" keyProperty="al_id" order="BEFORE">
