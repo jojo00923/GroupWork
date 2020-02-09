@@ -59,21 +59,6 @@ public class AlbaInsertController {
 			throw new RuntimeException(e);
 		}
 		
-		List<LicAlbaVO> licAlbaList = new ArrayList();
-		String[] licCodeList = req.getParameterMap().get("lic_code");
-		String[] licImageList = req.getParameterMap().get("lic_image");
-		for(int i=0; i<licCodeList.length; i++) {
-			if(!"".equals(licCodeList[i])) {
-				LicAlbaVO licAlbaVO = new LicAlbaVO();
-				licAlbaVO.setAl_id(alba.getAl_id());
-				licAlbaVO.setLic_code(licCodeList[i]);
-				licAlbaVO.setLic_image("");
-				
-				licAlbaList.add(licAlbaVO);
-			}
-		}
-		alba.setLicAlbaList(licAlbaList);
-		
 		Map<String, List<CharSequence>> errors = new HashMap<>(); //한번에 여러개의 메세지
 		req.setAttribute("errors", errors); 
 		GeneralValidator validator = new GeneralValidator();

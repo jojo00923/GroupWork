@@ -47,16 +47,6 @@ public class AlbaServiceImpl implements IAlbaService {
 	public ServiceResult createAlba(AlbaVO alba) {
 		ServiceResult result = null;
 		int cnt =  albaDAO.insertAlba(alba);
-//		for(LicAlbaVO licAlba : alba.getLicAlbaList()) {
-//			System.out.println();
-//			System.out.println();
-//			System.out.println();
-//			System.out.println();
-//			System.out.println();
-//			System.out.println();
-//			System.out.println("Dfsdfsdfsdfsdfjshdfjsdhfsdhf " + licAlba);
-//			licAlbaDAO.insertLicAlba(licAlba);
-//		}
 		
 		if(cnt>0) {
 			result = ServiceResult.OK;
