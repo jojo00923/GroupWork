@@ -125,6 +125,13 @@
 	WHERE AL_ID = #{al_id}
 </delete>
 
+<select id="selectView" parameterType="licAlbaVO" resultType="java.util.Map">
+	SELECT lic_image
+	FROM LIC_ALBA
+	WHERE AL_ID = #{al_id}
+	AND LIC_CODE = #{lic_code}
+</select>
+
 </mapper>
 
 

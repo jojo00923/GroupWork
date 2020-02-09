@@ -167,6 +167,17 @@ ${errors}
 		$('[name="gr_code"]').val('${alba.gr_code}');
 	})
 	
+	$(".lic-delete").on("click", function(){
+		let span = $(this).parent("span");
+		let attNo = span.data("attno");
+		span.hide();
+		let input = $("<input>").attr({
+						"type":"text",
+						"name":"delAttNos"
+					}).val(attNo);
+		boardForm.append(input);
+	});
+	
 </script>
 </body>
 </html>

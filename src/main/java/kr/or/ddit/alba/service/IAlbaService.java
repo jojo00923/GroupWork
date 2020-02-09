@@ -1,5 +1,6 @@
 package kr.or.ddit.alba.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import kr.or.ddit.enumpkg.ServiceResult;
@@ -16,5 +17,6 @@ public interface IAlbaService {
 	public ServiceResult modifyAlba(AlbaVO alba);
 	public ServiceResult createAlba(AlbaVO alba);
 	public ServiceResult removeAlba(String al_id);
+	public HashMap<String, Object> readImage(LicAlbaVO licAlba);
 
 }

@@ -1,5 +1,6 @@
 package kr.or.ddit.vo;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -14,11 +15,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class LicAlbaVO implements Serializable{
-
-//	public LicAlbaVO(String lic_image) {
-//		super();
-//		this.lic_image = lic_image;
-//	}
 	
 	private PartWrapper part;
 	private String al_id;
@@ -38,5 +34,9 @@ public class LicAlbaVO implements Serializable{
 	public String getImgBase64() {
 		if(lic_image==null) return null;
 		return Base64.encodeBase64String(lic_image);
+	}
+	
+	public void saveFile(File saveFolder) throws IOException {
+		part.saveFile(saveFolder);
 	}
 }

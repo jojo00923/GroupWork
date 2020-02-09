@@ -33,4 +33,6 @@ public class AlbaVO implements Serializable{
 	private LicAlbaVO licAlba;
 	private String lic_code;
 	
+	private int[] DelLicAlbaNos;
+	
 }

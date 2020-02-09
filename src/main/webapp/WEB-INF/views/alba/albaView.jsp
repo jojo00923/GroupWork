@@ -61,7 +61,10 @@
 			<td>
 				<c:if test="${not empty licAlbaList }">
 					<c:forEach items="${licAlbaList }" var="licAlba">
-						<a href="<c:url value='/alba/licenseImage.do'/>">${licAlba.lic_name }</a> <br>
+						<a href="#"
+							data-toggle="modal" data-target="#exampleModalLong"
+							data-who="${licAlba.al_id }" data-code="${licAlba.lic_code }" >
+						${licAlba.lic_name }</a><br>
 					</c:forEach>
 				</c:if>
 			</td>
@@ -106,6 +109,30 @@
   </div>
 </div>
 	
-	
+<script>
+	$("#exampleModalLong").on("show.bs.modal", function(event){
+		let aTag = $(event.relatedTarget);
+		let modalBody = $(this).find(".modal-body")
+		$.ajax({
+			url : "<c:url value='/alba/licenseImage.do'/>",
+			data : {
+				who : aTag.data("who"),
+				code : aTag.data("code")
+			},
+			method : "get",
+			dataType : "json",
+			success : function(resp) {
+				let image = $("<img>").attr({
+					'class' : "imgGroup",
+					'src' : "data:image/*;base64,resp.imgBase64"
+				});
+				modalBody.html(image);
+			},
+			error : function(xhr) {
+				console.log(xhr.status);
+			}
+		});
+	});
+</script>	
 </body>
 </html>

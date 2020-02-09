@@ -1,5 +1,6 @@
 package kr.or.ddit.alba.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -17,9 +18,10 @@ public interface IAlbaDAO {
 	public int insertAlba(AlbaVO alba);
 	public int insertAlba(AlbaVO alba, SqlSession sqlSession);
 	public int updateAlba(AlbaVO alba);
+	public int updateAlba(AlbaVO alba, SqlSession sqlSession);
 	public int deleteAlba(String al_id);
 	public List<GradeVO> selectGrade(); //학력
 	public List<LicAlbaVO> selectLIC(); //자격증
-	
+	public HashMap<String, Object> selectView(LicAlbaVO licAlba);
 	
 }
