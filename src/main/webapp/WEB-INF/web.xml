@@ -18,15 +18,6 @@ version="3.0">
   	<param-value>204Company</param-value>
   </context-param>
   
-  <!--  <filter>
-  	<filter-name>BlindFilter</filter-name>
-  	<filter-class>kr.or.ddit.web07_fileupload.filter.BlindFilter</filter-class>
-  </filter>
-  <filter-mapping>
-  	<filter-name>BlindFilter</filter-name>
-  	<url-pattern>/board/*</url-pattern>
-  </filter-mapping>  -->
-  
   <filter>
   	<filter-name>CharacterEncodingFilter</filter-name>
   	<filter-class>kr.or.ddit.web07_fileupload.filter.CharacterEncodingFilter</filter-class>
@@ -82,65 +73,5 @@ version="3.0">
   </servlet-mapping>
   
   
-  <servlet>
-  	<servlet-name>DescriptionServlet</servlet-name>
-  	<servlet-class>kr.or.ddit.web.DescriptionServlet</servlet-class>
-  	<init-param>
-  		<param-name>testParam</param-name>
-  		<param-value>파라미터값</param-value>
-  	</init-param>
-  	<init-param>
-  		<param-name>testParam2</param-name>
-  		<param-value>파라미터값2</param-value>
-  	</init-param>
-  	<load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>DescriptionServlet</servlet-name>
-  	<url-pattern>/desc</url-pattern>
-  </servlet-mapping>
-  
-  
-  
-  <servlet>
-  	<servlet-name>ClasspathImageServlet</servlet-name>
-  	<servlet-class>kr.or.ddit.web.ClasspathImageServlet</servlet-class>
-  	<init-param>
-  		<param-name>imagePath</param-name>
-  		<param-value>/kr/or/ddit/test</param-value>
-  	</init-param>
-  	<load-on-startup>2</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>ClasspathImageServlet</servlet-name>
-  	<url-pattern>/image.do</url-pattern>
-  </servlet-mapping>
-  
-  
-  <servlet>
-  	<servlet-name>FileUploadServlet</servlet-name>
-  	<servlet-class>kr.or.ddit.web07_fileupload.FileUploadServlet</servlet-class>
-  	<multipart-config>
-  		<location>d:/temp</location> <!-- 임시저장소 -->
-  		<max-file-size>10240000</max-file-size>
-  		<max-request-size>102400000</max-request-size>
-  		<file-size-threshold>10240</file-size-threshold> <!-- 10kb미만은 메모리에 저장, 초과하면 location에 저장-->
-  	</multipart-config> <!-- 어노테이션 대용 -->
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>FileUploadServlet</servlet-name>
-	<url-pattern>/fileUpload</url-pattern>
-</servlet-mapping>
-
-
- <!--   <jsp-config>
-  	<jsp-property-group>
-  		<url-pattern>*.jsp</url-pattern>
-  		<include-prelude>/05/includeeTest.jspf</include-prelude>
-  	</jsp-property-group>
-  </jsp-config>  -->
- <!--  <session-config>
-  	<session-timeout>2</session-timeout>
-  </session-config> -->
   
 </web-app>
