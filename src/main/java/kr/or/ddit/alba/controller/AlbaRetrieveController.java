@@ -20,7 +20,6 @@ import kr.or.ddit.alba.service.IAlbaService;
 import kr.or.ddit.mvc.annotation.CommandHandler;
 import kr.or.ddit.mvc.annotation.URIMapping;
 import kr.or.ddit.vo.AlbaVO;
-import kr.or.ddit.vo.MemberVO;
 import kr.or.ddit.vo.PagingVO;
 import kr.or.ddit.vo.SearchVO;
 

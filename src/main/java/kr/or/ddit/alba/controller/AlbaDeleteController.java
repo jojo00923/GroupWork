@@ -16,7 +16,6 @@ import kr.or.ddit.mvc.annotation.CommandHandler;
 import kr.or.ddit.mvc.annotation.HttpMethod;
 import kr.or.ddit.mvc.annotation.URIMapping;
 import kr.or.ddit.vo.AlbaVO;
-import kr.or.ddit.vo.BoardVO;
 
 @CommandHandler
 public class AlbaDeleteController {
