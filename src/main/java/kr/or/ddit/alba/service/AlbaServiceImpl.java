@@ -57,13 +57,9 @@ public class AlbaServiceImpl implements IAlbaService {
 			int cnt =  albaDAO.insertAlba(alba, sqlSession);
 			ServiceResult result = ServiceResult.FAIL;
 			if(cnt>0) {
-				System.out.println("dd");
 				licAlbaDAO.insertLicAlba(alba, sqlSession);
-				System.out.println("dd");
 				result = ServiceResult.OK;
-				System.out.println("dd");
 				sqlSession.commit();
-				System.out.println("dd");
 			}
 			return result;
 		}
