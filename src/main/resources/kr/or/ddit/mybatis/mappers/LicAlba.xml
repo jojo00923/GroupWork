@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.alba.dao.ILicAlbaDAO">
+
+<insert id="insertLicAlba" parameterType="licAlbaVO">
+	<selectKey resultType="string" keyProperty="al_id" order="BEFORE">
+		SELECT 'ALBA_' || LPAD(NVL(MAX(SUBSTR(AL_ID,6))+1, 0),3,'0')
+		FROM ALBA
+	</selectKey>
+	INSERT INTO LIC_ALBA (
+			AL_ID ,
+			LIC_CODE ,
+			LIC_IMAGE 
+		) 
+		VALUES (
+	  		#{al_id,jdbcType=VARCHAR },
+	  		#{lic_code,jdbcType=VARCHAR },
+	  		#{lic_image,jdbcType=VARCHAR }
+		)
+</insert>
+
+</mapper>

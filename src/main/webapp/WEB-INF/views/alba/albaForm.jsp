@@ -96,28 +96,61 @@ ${errors}
 		<tr>
 			<th>자격증</th>
 			<td>
-				<select name="lic_code">
-					<option value="">자격증</option>
-					<c:forEach items="${licenseList }" var="license">
-						<option value="${license.lic_code}" >${license.lic_name}</option>
-					</c:forEach>
-				</select>
+				<div>
+					<select name="lic_code" >
+						<option value="">자격증</option>
+						<c:forEach items="${licenseList }" var="license">
+							<option value="${license.lic_code}" >${license.lic_name}</option>
+						</c:forEach>
+					</select>
+					<input type="file" name="lic_image"/>
+					<button type="button" class="lic-add">추가</button>
+				</div>
+				<div class="lic-list"></div>
 			</td>
 		</tr>
 		
 		<tr>
 			<th>첨부파일</th>
 			<td>
-				<input type="file" name="bo_file" multiple/> <!-- 넘어가는 파일이 여러개 -->
+				<input type="file" name="bo_file"/> <!-- 넘어가는 파일이 여러개 -->
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
 				<input class="btn btn-success" type="submit" value="등록"> <!-- 클릭이후에 타겟이 form이 됨 -->
-				<input class="btn btn-warning" type="reset" value="취소">
+				<input class="btn btn-warning" type="button" value="목록" onclick="history.back();">
 			</td>
 		</tr>
 	</table>
 </form>
+<script>
+	$(function(){
+		$(document).on('click', '.lic-add', function(){
+			var licSize;
+			if($('.lic-list').children().length + 1 >= '${licenseList.size()}'){
+				return false;
+			}
+			
+			$('.lic-list').append(
+				 '<div>'
+				+  '<select name="lic_code">'
+				+  '  <option value="">자격증</option>'
+				+  '  <c:forEach items="${licenseList}" var="license">'
+				+  '    <option value="${license.lic_code}" >${license.lic_name}</option>'
+				+  '  </c:forEach>'
+				+  '</select>'
+				+  '<input type="file" name="lic_image"/>'
+				+  '<button type="button" class="lic-add">추가</button>'
+				+  '<button type="button" class="lic-delete">삭제</button>'	
+				+'</div>'
+			);
+		});
+		$(document).on('click', '.lic-delete', function(){
+			$(this).parent().remove();
+		});
+	})
+	
+</script>
 </body>
 </html>

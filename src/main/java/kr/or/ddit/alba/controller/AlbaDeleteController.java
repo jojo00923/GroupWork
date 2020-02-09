@@ -22,10 +22,10 @@ import kr.or.ddit.vo.BoardVO;
 public class AlbaDeleteController {
 	IAlbaService service = new AlbaServiceImpl();
 	
-	@URIMapping(value="/alba/albaDelete.do",method=HttpMethod.POST)
+	@URIMapping(value="/alba/albaDelete.do",method=HttpMethod.GET)
 	public String delete(HttpServletRequest req, HttpServletResponse resp) {
 		
-		String al_id = req.getParameter("al_id");
+		String al_id = req.getParameter("what");
 		
 		String goPage =null;
 		String message = null;

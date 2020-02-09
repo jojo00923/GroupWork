@@ -2,6 +2,7 @@ package kr.or.ddit.alba.controller;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import kr.or.ddit.alba.dao.AlbaDAOImpl;
 import kr.or.ddit.alba.dao.IAlbaDAO;
+import kr.or.ddit.alba.dao.LicAlbaDAOImpl;
 import kr.or.ddit.alba.service.AlbaServiceImpl;
 import kr.or.ddit.alba.service.IAlbaService;
 import kr.or.ddit.enumpkg.ServiceResult;
@@ -24,6 +26,7 @@ import kr.or.ddit.mvc.annotation.HttpMethod;
 import kr.or.ddit.mvc.annotation.URIMapping;
 import kr.or.ddit.validator.GeneralValidator;
 import kr.or.ddit.vo.AlbaVO;
+import kr.or.ddit.vo.LicAlbaVO;
 
 @CommandHandler
 public class AlbaInsertController {
@@ -55,6 +58,21 @@ public class AlbaInsertController {
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			throw new RuntimeException(e);
 		}
+		
+		List<LicAlbaVO> licAlbaList = new ArrayList();
+		String[] licCodeList = req.getParameterMap().get("lic_code");
+		String[] licImageList = req.getParameterMap().get("lic_image");
+		for(int i=0; i<licCodeList.length; i++) {
+			if(!"".equals(licCodeList[i])) {
+				LicAlbaVO licAlbaVO = new LicAlbaVO();
+				licAlbaVO.setAl_id(alba.getAl_id());
+				licAlbaVO.setLic_code(licCodeList[i]);
+				licAlbaVO.setLic_image("");
+				
+				licAlbaList.add(licAlbaVO);
+			}
+		}
+		alba.setLicAlbaList(licAlbaList);
 		
 		Map<String, List<CharSequence>> errors = new HashMap<>(); //한번에 여러개의 메세지
 		req.setAttribute("errors", errors); 

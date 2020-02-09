@@ -1,6 +1,7 @@
 package kr.or.ddit.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.type.Alias;
@@ -24,9 +25,12 @@ public class AlbaVO implements Serializable{
 	private String al_spec;
 	private String al_desc;
 	private String gr_code;
+	private String gr_name;
 	private String al_career;
 	private String al_gen;
 	private String al_btype;
 	private String al_mail;
+	private List<LicAlbaVO> licAlbaList;
+	
 	
 }

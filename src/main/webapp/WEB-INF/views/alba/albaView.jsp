@@ -36,10 +36,6 @@
 			<td>${alba["al_spec"]}</td>
 		</tr>
 		<tr>
-			<th>학력</th>
-			<td>${grade["gr_name"]}</td>
-		</tr>
-		<tr>
 			<th>경력사항</th>
 			<td>${alba["al_career"]}</td>
 		</tr>
@@ -55,7 +51,22 @@
 			<th>이메일</th>
 			<td>${alba["al_mail"]}</td>
 		</tr>
-			<tr>
+		<tr>
+			<th>학력</th>
+			<td>${alba["gr_name"]}</td>
+		</tr>
+		<tr>
+			<th>자격증</th>
+			<c:set var="licAlbaList" value="${alba.licAlbaList }" />
+			<td>
+				<c:if test="${not empty licAlbaList }">
+					<c:forEach items="${licAlbaList }" var="licAlba">
+						${licAlba.lic_name } <br>
+					</c:forEach>
+				</c:if>
+			</td>
+		</tr>
+		<tr>
 			<td colspan="2">
 				<c:url value="/alba/albaUpdate.do" var="albaUpdateURL">
 					<c:param name="what" value="${alba.al_id}"/>
@@ -74,8 +85,6 @@
 				
 			</td>
 		</tr>	
-	</table>
-	
-				
+	</table>	
 </body>
 </html>

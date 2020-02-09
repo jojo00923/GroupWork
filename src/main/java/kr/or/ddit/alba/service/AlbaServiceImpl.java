@@ -4,13 +4,17 @@ import java.util.List;
 
 import kr.or.ddit.alba.dao.AlbaDAOImpl;
 import kr.or.ddit.alba.dao.IAlbaDAO;
+import kr.or.ddit.alba.dao.ILicAlbaDAO;
+import kr.or.ddit.alba.dao.LicAlbaDAOImpl;
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.vo.AlbaVO;
+import kr.or.ddit.vo.LicAlbaVO;
 import kr.or.ddit.vo.PagingVO;
 
 public class AlbaServiceImpl implements IAlbaService {
 	
 	IAlbaDAO albaDAO = new AlbaDAOImpl();
+	ILicAlbaDAO licAlbaDAO = new LicAlbaDAOImpl();
 
 	@Override
 	public int readAlbaCount(PagingVO<AlbaVO> pagingVO) {
@@ -43,6 +47,17 @@ public class AlbaServiceImpl implements IAlbaService {
 	public ServiceResult createAlba(AlbaVO alba) {
 		ServiceResult result = null;
 		int cnt =  albaDAO.insertAlba(alba);
+//		for(LicAlbaVO licAlba : alba.getLicAlbaList()) {
+//			System.out.println();
+//			System.out.println();
+//			System.out.println();
+//			System.out.println();
+//			System.out.println();
+//			System.out.println();
+//			System.out.println("Dfsdfsdfsdfsdfjshdfjsdhfsdhf " + licAlba);
+//			licAlbaDAO.insertLicAlba(licAlba);
+//		}
+		
 		if(cnt>0) {
 			result = ServiceResult.OK;
 		}else {

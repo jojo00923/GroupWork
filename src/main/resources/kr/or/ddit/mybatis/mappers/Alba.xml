@@ -43,17 +43,33 @@
 				AL_GEN,AL_BTYPE,AL_MAIL
 		FROM ALBA
 		<include refid="searchFrag" />
+		ORDER BY AL_ID DESC
 		) A) B
 	WHERE RNUM BETWEEN #{startRow} AND #{endRow}
 </select>
 
-<select id="selectAlba" parameterType="string" resultType="albaVO">
+<resultMap type="albaVO" id="albaMap" autoMapping="true">
+	<id property="al_id" column="AL_ID"/>
+	<collection property="licAlbaList" javaType="java.util.List" ofType="licAlbaVO" autoMapping="true" />
+</resultMap>
+<select id="selectAlba" parameterType="string" resultMap="albaMap">
+	SELECT A.AL_ID,A.AL_NAME,A.AL_AGE,A.AL_ADDRESS,
+		   A.AL_HP,A.AL_SPEC,A.GR_CODE,B.GR_NAME,A.AL_CAREER,
+		   A.AL_GEN,A.AL_BTYPE,A.AL_MAIL,
+		   C.LIC_CODE, D.LIC_NAME
+	FROM ALBA A JOIN GRADE B ON (A.GR_CODE = B.GR_CODE)
+	            LEFT JOIN LIC_ALBA C ON (A.AL_ID = C.AL_ID)
+	            LEFT JOIN LICENSE D ON (C.LIC_CODE = D.LIC_CODE)
+	WHERE A.AL_ID = #{al_id}
+</select>
+<select id="selectLicAlbaListById" parameterType="string" resultType="licAlbaVO">
 	SELECT AL_ID,AL_NAME,AL_AGE,AL_ADDRESS,
-		   AL_HP,AL_SPEC,GR_CODE,AL_CAREER,
+		   AL_HP,AL_SPEC,A.GR_CODE,B.GR_NAME,AL_CAREER,
 		   AL_GEN,AL_BTYPE,AL_MAIL
-	FROM ALBA 
+	FROM ALBA A JOIN GRADE B ON (A.GR_CODE = B.GR_CODE)
 	WHERE AL_ID = #{al_id}
 </select>
+
 <insert id="insertAlba" parameterType="albaVO">
 	<selectKey resultType="string" keyProperty="al_id" order="BEFORE">
 		SELECT 'ALBA_' || LPAD(NVL(MAX(SUBSTR(AL_ID,6))+1, 0),3,'0')
@@ -92,6 +108,11 @@
 	SELECT LIC_CODE, LIC_NAME
 	FROM LICENSE
 </select>
+
+<delete id="deleteAlba" parameterType="string">
+	DELETE FROM ALBA
+	WHERE AL_ID = #{al_id}
+</delete>
 
 </mapper>
 

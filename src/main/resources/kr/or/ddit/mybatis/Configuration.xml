@@ -33,5 +33,6 @@
     <mapper resource="kr/or/ddit/mybatis/mappers/Board.xml"/>
     <mapper resource="kr/or/ddit/mybatis/mappers/Attatch.xml"/>
     <mapper resource="kr/or/ddit/mybatis/mappers/Alba.xml"/>
+    <mapper resource="kr/or/ddit/mybatis/mappers/LicAlba.xml"/>
   </mappers>
 </configuration>
