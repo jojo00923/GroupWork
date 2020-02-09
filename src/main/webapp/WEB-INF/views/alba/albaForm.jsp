@@ -111,12 +111,12 @@ ${errors}
 			</td>
 		</tr>
 		
-		<tr>
+		<!-- <tr>
 			<th>첨부파일</th>
 			<td>
-				<input type="file" name="bo_file"/> <!-- 넘어가는 파일이 여러개 -->
+				<input type="file" name="bo_file"/> 넘어가는 파일이 여러개
 			</td>
-		</tr>
+		</tr> -->
 		<tr>
 			<td colspan="2">
 				<input class="btn btn-success" type="submit" value="등록"> <!-- 클릭이후에 타겟이 form이 됨 -->

@@ -16,6 +16,7 @@ public class AlbaDAOImpl implements IAlbaDAO {
 	SqlSessionFactory sqlSessionFactory =
 			CustomSqlSessionFactoryBuilder.getSqlSessionFactory();
 
+	
 	@Override
 	public int selectAlbaCount(PagingVO<AlbaVO> pagingVO) {
 		try(
@@ -49,15 +50,15 @@ public class AlbaDAOImpl implements IAlbaDAO {
 			}
 	}
 
-
 	@Override
 	public int insertAlba(AlbaVO alba) {
-		try(
-				SqlSession sqlSession = sqlSessionFactory.openSession(true);	
-			){
-				IAlbaDAO mapper = sqlSession.getMapper(IAlbaDAO.class);
-				return mapper.insertAlba(alba);
-			}
+		return 0;
+	}
+
+	@Override
+	public int insertAlba(AlbaVO alba, SqlSession sqlSession) {
+		IAlbaDAO mapper = sqlSession.getMapper(IAlbaDAO.class);
+		return mapper.insertAlba(alba);
 	}
 
 
@@ -103,5 +104,7 @@ public class AlbaDAOImpl implements IAlbaDAO {
 				return mapper.selectLIC();
 			}
 	}
+
+
 	
 }

@@ -2,19 +2,25 @@ package kr.or.ddit.alba.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+
 import kr.or.ddit.alba.dao.AlbaDAOImpl;
 import kr.or.ddit.alba.dao.IAlbaDAO;
 import kr.or.ddit.alba.dao.ILicAlbaDAO;
 import kr.or.ddit.alba.dao.LicAlbaDAOImpl;
 import kr.or.ddit.enumpkg.ServiceResult;
+import kr.or.ddit.mybatis.CustomSqlSessionFactoryBuilder;
 import kr.or.ddit.vo.AlbaVO;
-import kr.or.ddit.vo.LicAlbaVO;
 import kr.or.ddit.vo.PagingVO;
 
 public class AlbaServiceImpl implements IAlbaService {
 	
 	IAlbaDAO albaDAO = new AlbaDAOImpl();
 	ILicAlbaDAO licAlbaDAO = new LicAlbaDAOImpl();
+	
+	SqlSessionFactory sqlSessionFactory =
+			CustomSqlSessionFactoryBuilder.getSqlSessionFactory();
 
 	@Override
 	public int readAlbaCount(PagingVO<AlbaVO> pagingVO) {
@@ -45,15 +51,22 @@ public class AlbaServiceImpl implements IAlbaService {
 
 	@Override
 	public ServiceResult createAlba(AlbaVO alba) {
-		ServiceResult result = null;
-		int cnt =  albaDAO.insertAlba(alba);
-		
-		if(cnt>0) {
-			result = ServiceResult.OK;
-		}else {
-			result = ServiceResult.FAIL;
+		try(
+			SqlSession sqlSession = sqlSessionFactory.openSession(false);	
+		){
+			int cnt =  albaDAO.insertAlba(alba, sqlSession);
+			ServiceResult result = ServiceResult.FAIL;
+			if(cnt>0) {
+				System.out.println("dd");
+				licAlbaDAO.insertLicAlba(alba, sqlSession);
+				System.out.println("dd");
+				result = ServiceResult.OK;
+				System.out.println("dd");
+				sqlSession.commit();
+				System.out.println("dd");
+			}
+			return result;
 		}
-		return result;
 	}
 
 	@Override

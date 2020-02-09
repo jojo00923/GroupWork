@@ -1,5 +1,6 @@
 package kr.or.ddit.alba.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import kr.or.ddit.alba.dao.AlbaDAOImpl;
 import kr.or.ddit.alba.dao.IAlbaDAO;
@@ -20,6 +22,8 @@ import kr.or.ddit.alba.dao.LicAlbaDAOImpl;
 import kr.or.ddit.alba.service.AlbaServiceImpl;
 import kr.or.ddit.alba.service.IAlbaService;
 import kr.or.ddit.enumpkg.ServiceResult;
+import kr.or.ddit.file.FileUploadRequestWrapper;
+import kr.or.ddit.file.PartWrapper;
 import kr.or.ddit.hint.InsertHint;
 import kr.or.ddit.mvc.annotation.CommandHandler;
 import kr.or.ddit.mvc.annotation.HttpMethod;
@@ -58,6 +62,22 @@ public class AlbaInsertController {
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			throw new RuntimeException(e);
 		}
+		
+		
+		String saveFolderUrl = "/albaImages";
+		String realPath = req.getServletContext().getRealPath(saveFolderUrl);
+		File saveFolder = new File(realPath);
+		if(!saveFolder.exists()) saveFolder.mkdirs();
+		if(req instanceof FileUploadRequestWrapper) {
+			List<PartWrapper> imageFiles = ((FileUploadRequestWrapper) req).getPartWrappers("lic_image");
+			for(PartWrapper imageFile : imageFiles) {
+				if(imageFile!=null && StringUtils.contains(imageFile.getMime(), "image")) {
+					imageFile.saveFile(saveFolder);
+					alba.getLicAlba().setLic_image(imageFile.getSavename());
+				}
+			}
+		}
+		
 		
 		Map<String, List<CharSequence>> errors = new HashMap<>(); //한번에 여러개의 메세지
 		req.setAttribute("errors", errors); 
