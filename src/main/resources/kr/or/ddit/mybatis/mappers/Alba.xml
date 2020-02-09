@@ -92,6 +92,23 @@
 		)
 </insert>
 
+<update id="updateAlba" parameterType="albaVO">
+	UPDATE ALBA
+	SET  
+	    AL_ADDRESS = #{al_address, jdbcType=VARCHAR},  
+	    AL_HP = #{al_hp, jdbcType=VARCHAR},   
+	    AL_SPEC = #{al_spec, jdbcType=VARCHAR},
+	    AL_DESC = #{al_desc, jdbcType=VARCHAR},   
+	    GR_CODE = #{gr_code, jdbcType=VARCHAR},   
+	    AL_CAREER = #{al_career, jdbcType=VARCHAR},   
+	    AL_MAIL = #{al_mail, jdbcType=VARCHAR}
+	    , AL_NAME = #{al_name, jdbcType=VARCHAR}
+	    , AL_AGE = #{al_age, jdbcType=INTEGER}
+	    , AL_GEN =  #{al_gen, jdbcType=VARCHAR}
+	    , AL_BTYPE = #{al_btype, jdbcType=VARCHAR}
+	WHERE AL_ID = #{al_id}
+</update>
+
 <select id="selectGrade" resultType="gradeVO">
 	SELECT GR_CODE, GR_NAME
 	FROM GRADE
@@ -101,6 +118,7 @@
 	SELECT LIC_CODE, LIC_NAME
 	FROM LICENSE
 </select>
+
 
 <delete id="deleteAlba" parameterType="string">
 	DELETE FROM ALBA

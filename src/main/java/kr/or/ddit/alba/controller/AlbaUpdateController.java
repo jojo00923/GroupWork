@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,6 +67,28 @@ public class AlbaUpdateController {
 			throw new RuntimeException(e);
 		}
 		
-		return null;
+		Map<String, List<CharSequence>> errors = new HashMap<>();
+		req.setAttribute("errors", errors);
+		GeneralValidator validator = new GeneralValidator();
+		boolean valid = validator.validate(alba, errors, UpdateHint.class);
+		String viewName = null;
+		String message = null;
+		if(valid) {
+			ServiceResult result = service.modifyAlba(alba);
+			switch (result) {
+			case OK:
+				viewName = "redirect:/alba/albaView.do?who="+alba.getAl_id();
+				break;
+
+			default:
+				message = "서버 오류 쫌따 다시.";
+				viewName = "alba/albaForm";
+				break;
+			}
+		} else {
+			viewName = "alba/albaForm";
+		}
+		req.setAttribute("message", message);
+		return viewName;
 	}
 }

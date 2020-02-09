@@ -22,11 +22,12 @@
 ${errors}
 <form method="post" enctype="multipart/form-data">
 	<table class="table table_bordered">
-		<%-- <tr>
+<%--  		<tr>
 			<th>알바생코드</th>
 			<td><input class="form-control" type="text" required
 				name="al_id" value="${alba.al_id }" /><span class="error">${errors.al_id }</span></td>
-		</tr> --%>
+		</tr>  --%>
+		<input type="hidden" name="al_id" value="${alba.al_id }" />
 		<tr>
 			<th>이름</th>
 			<td><input class="form-control" type="text" required
@@ -151,6 +152,9 @@ ${errors}
 		$(document).on('click', '.lic-delete', function(){
 			$(this).parent().remove();
 		});
+		
+		// 학력데이터 수정화면에 넘기기
+		$('[name="gr_code"]').val('${alba.gr_code}');
 	})
 	
 </script>

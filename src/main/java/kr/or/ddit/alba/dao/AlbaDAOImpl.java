@@ -63,8 +63,15 @@ public class AlbaDAOImpl implements IAlbaDAO {
 
 	@Override
 	public int updateAlba(AlbaVO alba) {
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println(alba.toString());
 		try(
-				SqlSession sqlSession = sqlSessionFactory.openSession();	
+				SqlSession sqlSession = sqlSessionFactory.openSession(true);	
 			){
 				IAlbaDAO mapper = sqlSession.getMapper(IAlbaDAO.class);
 				return mapper.updateAlba(alba);
