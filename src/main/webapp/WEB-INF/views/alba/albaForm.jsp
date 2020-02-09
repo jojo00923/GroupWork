@@ -156,6 +156,13 @@ ${errors}
 			$(this).parent().remove();
 		});
 		
+		
+		// 혈액형데이터 수정화면에 넘기기
+		$('[name="al_btype"]').val('${alba.al_btype}');
+		
+		// 라디오버튼 성별 데이터 수정화면에 넘기기
+		$("input[value='${alba.al_gen}']").attr('checked', true);
+		
 		// 학력데이터 수정화면에 넘기기
 		$('[name="gr_code"]').val('${alba.gr_code}');
 	})
