@@ -31,5 +31,6 @@ public class AlbaVO implements Serializable{
 	private List<LicAlbaVO> licAlbaList;
 	
 	private LicAlbaVO licAlba;
+	private String lic_code;
 	
 }

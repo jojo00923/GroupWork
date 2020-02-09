@@ -3,6 +3,7 @@ package kr.or.ddit.alba.controller;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +28,7 @@ import kr.or.ddit.mvc.annotation.HttpMethod;
 import kr.or.ddit.mvc.annotation.URIMapping;
 import kr.or.ddit.validator.GeneralValidator;
 import kr.or.ddit.vo.AlbaVO;
+import kr.or.ddit.vo.LicAlbaVO;
 
 @CommandHandler
 public class AlbaUpdateController {
@@ -66,6 +68,30 @@ public class AlbaUpdateController {
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			throw new RuntimeException(e);
 		}
+		
+		List<LicAlbaVO> licAlbaList = new ArrayList<>();
+		
+		String saveFolderUrl = "/albaImages";
+		String realPath = req.getServletContext().getRealPath(saveFolderUrl);
+		File saveFolder = new File(realPath);
+		if(!saveFolder.exists()) saveFolder.mkdirs();
+		if(req instanceof FileUploadRequestWrapper) {
+			List<PartWrapper> imageFiles = ((FileUploadRequestWrapper) req).getPartWrappers("lic_image");
+			System.out.println(imageFiles.size());
+			if(imageFiles!=null&& imageFiles.size()>0) {
+			for(PartWrapper imageFile : imageFiles) {
+					if(StringUtils.contains(imageFile.getMime(), "image")) {
+						imageFile.saveFile(saveFolder);
+						LicAlbaVO licAlbaVO = new LicAlbaVO();
+						System.out.println(imageFile.getBytes().toString());
+						licAlbaVO.setLic_img(imageFile);
+						licAlbaList.add(licAlbaVO);
+					}
+				}
+			}
+		}
+		
+		alba.setLicAlbaList(licAlbaList);
 		
 		Map<String, List<CharSequence>> errors = new HashMap<>();
 		req.setAttribute("errors", errors);

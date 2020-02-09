@@ -52,11 +52,12 @@ public class AlbaServiceImpl implements IAlbaService {
 	@Override
 	public ServiceResult createAlba(AlbaVO alba) {
 		try(
-			SqlSession sqlSession = sqlSessionFactory.openSession(false);	
+			SqlSession sqlSession = sqlSessionFactory.openSession(true);	
 		){
 			int cnt =  albaDAO.insertAlba(alba, sqlSession);
 			ServiceResult result = ServiceResult.FAIL;
 			if(cnt>0) {
+				sqlSession.commit();
 				licAlbaDAO.insertLicAlba(alba, sqlSession);
 				result = ServiceResult.OK;
 				sqlSession.commit();

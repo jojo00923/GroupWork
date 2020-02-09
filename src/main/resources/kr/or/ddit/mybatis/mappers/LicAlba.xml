@@ -7,7 +7,7 @@
 			INTO LIC_ALBA (
 				AL_ID,		LIC_CODE,		LIC_IMAGE
 			) VALUES (
-			    #{al_id}, #{gr_code}, #{licAlba.lic_image, jdbcType=BLOB}
+			    #{al_id}, #{lic_code}, #{licAlba.lic_image, jdbcType=BLOB}
 			)
 		</foreach>
 		SELECT * FROM DUAL
