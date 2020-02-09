@@ -130,6 +130,8 @@ ${errors}
 
 	$(function(){
 		$(document).on('click', '.lic-add', function(){
+			
+			console.log("lic_add" + $(this));
 			var licSize;
 			if($('.lic-list').children().length + 1 >= '${licenseList.size()}'){
 				return false;

@@ -63,6 +63,7 @@ public class AlbaInsertController {
 			throw new RuntimeException(e);
 		}
 		
+		List<LicAlbaVO> licAlbaList = new ArrayList<>();
 		
 		String saveFolderUrl = "/albaImages";
 		String realPath = req.getServletContext().getRealPath(saveFolderUrl);
@@ -70,14 +71,21 @@ public class AlbaInsertController {
 		if(!saveFolder.exists()) saveFolder.mkdirs();
 		if(req instanceof FileUploadRequestWrapper) {
 			List<PartWrapper> imageFiles = ((FileUploadRequestWrapper) req).getPartWrappers("lic_image");
+			System.out.println(imageFiles.size());
+			if(imageFiles!=null&& imageFiles.size()>0) {
 			for(PartWrapper imageFile : imageFiles) {
-				if(imageFile!=null && StringUtils.contains(imageFile.getMime(), "image")) {
-					imageFile.saveFile(saveFolder);
-					alba.getLicAlba().setLic_image(imageFile.getSavename());
+					if(StringUtils.contains(imageFile.getMime(), "image")) {
+						imageFile.saveFile(saveFolder);
+						LicAlbaVO licAlbaVO = new LicAlbaVO();
+						System.out.println(imageFile.getBytes().toString());
+						licAlbaVO.setLic_img(imageFile);
+						licAlbaList.add(licAlbaVO);
+					}
 				}
 			}
 		}
 		
+		alba.setLicAlbaList(licAlbaList);
 		
 		Map<String, List<CharSequence>> errors = new HashMap<>(); //한번에 여러개의 메세지
 		req.setAttribute("errors", errors); 

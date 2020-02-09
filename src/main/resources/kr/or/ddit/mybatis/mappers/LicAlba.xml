@@ -4,10 +4,10 @@
 	<insert id="insertLicAlba" parameterType="albaVO">
 		INSERT ALL
 		<foreach collection="licAlbaList" item="licAlba">
-			INTO ATTATCH (
+			INTO LIC_ALBA (
 				AL_ID,		LIC_CODE,		LIC_IMAGE
 			) VALUES (
-			    #{al_id}, #{licAlba.lic_code}, #{licAlba.lic_image}
+			    #{al_id}, #{gr_code}, #{licAlba.lic_image, jdbcType=BLOB}
 			)
 		</foreach>
 		SELECT * FROM DUAL
