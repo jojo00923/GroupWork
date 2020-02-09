@@ -32,5 +32,6 @@ public class AlbaVO implements Serializable{
 	private String al_mail;
 	private List<LicAlbaVO> licAlbaList;
 	
+	private LicAlbaVO licAlba;
 	
 }
