@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 
 import kr.or.ddit.alba.service.IAlbaService;
 import kr.or.ddit.mybatis.CustomSqlSessionFactoryBuilder;
+import kr.or.ddit.vo.AlbaVO;
 import kr.or.ddit.vo.LicAlbaVO;
 
 public class LicAlbaDAOImpl implements ILicAlbaDAO {
@@ -13,13 +14,26 @@ public class LicAlbaDAOImpl implements ILicAlbaDAO {
 			CustomSqlSessionFactoryBuilder.getSqlSessionFactory();
 	
 	@Override
-	public int insertLicAlba(LicAlbaVO licAlbaVO) {
-		try(
-				SqlSession sqlSession = sqlSessionFactory.openSession();	
-			){
-				ILicAlbaDAO mapper = sqlSession.getMapper(ILicAlbaDAO.class);
-				return mapper.insertLicAlba(licAlbaVO);
-			}
+	public int insertLicAlba(AlbaVO alba) {
+		return 0;
+	}
+
+	@Override
+	public int insertLicAlba(AlbaVO alba, SqlSession sqlSession) {
+		ILicAlbaDAO mapper = sqlSession.getMapper(ILicAlbaDAO.class);
+		return mapper.insertLicAlba(alba);
+	}
+
+	@Override
+	public int deleteLicAlba(AlbaVO alba) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteLicAlba(AlbaVO alba, SqlSession sqlSession) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

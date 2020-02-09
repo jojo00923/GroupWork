@@ -3,10 +3,8 @@ package kr.or.ddit.vo;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.type.Alias;
 
-import kr.or.ddit.hint.InsertHint;
 import kr.or.ddit.validator.rules.constraints.NotBlank;
 import lombok.Data;
 
@@ -32,5 +30,6 @@ public class AlbaVO implements Serializable{
 	private String al_mail;
 	private List<LicAlbaVO> licAlbaList;
 	
+	private LicAlbaVO licAlba;
 	
 }
