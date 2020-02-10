@@ -99,7 +99,8 @@ ${errors}
 			<th>자격증</th>
 			<td>
 				<div>
-					<select name="lic_code" >
+					
+					<select id="lic" name="lic_code" >
 						<option value="">자격증</option>
 						<c:forEach items="${licenseList }" var="license">
 							<option value="${license.lic_code}" >${license.lic_name}</option>
@@ -111,7 +112,6 @@ ${errors}
 				<div class="lic-list"></div>
 			</td>
 		</tr>
-		
 		<!-- <tr>
 			<th>첨부파일</th>
 			<td>
@@ -165,6 +165,9 @@ ${errors}
 		
 		// 학력데이터 수정화면에 넘기기
 		$('[name="gr_code"]').val('${alba.gr_code}');
+		
+		//자격증데이터 수정화면에 넘기기
+		$("#lic > option[value='${alba.lic_code}']").attr('selected', 'true');
 	})
 	
 	$(".lic-delete").on("click", function(){
