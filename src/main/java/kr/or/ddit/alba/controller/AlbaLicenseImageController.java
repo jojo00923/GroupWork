@@ -1,6 +1,7 @@
 package kr.or.ddit.alba.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -18,6 +19,7 @@ import kr.or.ddit.alba.service.IAlbaService;
 import kr.or.ddit.mvc.annotation.CommandHandler;
 import kr.or.ddit.mvc.annotation.URIMapping;
 import kr.or.ddit.vo.LicAlbaVO;
+import oracle.sql.BLOB;
 
 @CommandHandler
 public class AlbaLicenseImageController {
@@ -25,7 +27,7 @@ public class AlbaLicenseImageController {
 	IAlbaService service = new AlbaServiceImpl();
 	
 	@URIMapping("/alba/licenseImage.do")
-	public String licenseImage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+	public String licenseImage(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException{
 		
 		LicAlbaVO licAlba = new LicAlbaVO();
 		req.setAttribute("licAlba", licAlba);
@@ -46,7 +48,9 @@ public class AlbaLicenseImageController {
 //		byte[] lic_image = service.readImage(licAlba);
 //		AlbaVO readImage = service.readImage(licAlba);
 		Map<String, Object> readImage = service.readImage(licAlba);
-		byte[] lic_image = (byte[]) readImage.get("LIC_IMAGE");
+		BLOB lic_image = (BLOB) readImage.get("LIC_IMAGE");
+		int blobLength = (int) lic_image.length(); 
+		byte[] blobAsBytes = lic_image.getBytes(1, blobLength);
 		System.out.println(readImage.get("LIC_IMAGE"));
 		System.out.println(lic_image);
 		
@@ -55,7 +59,7 @@ public class AlbaLicenseImageController {
 			System.out.println("key:" + key);
 		}
 //		
-		licAlba.setLic_image(lic_image);
+		licAlba.setLic_image(blobAsBytes);
 		System.out.println("lic_image" + lic_image);
 		System.out.println("getLic_image" + licAlba.getLic_image());
 		System.out.println("getImgBase64" + licAlba.getImgBase64());

@@ -124,7 +124,7 @@
 			success : function(resp) {
 				let image = $("<img>").attr({
 					'class' : "imgGroup",
-					'src' : "data:image/*;base64,resp.imgBase64"
+					'src' : "data:image/*;base64," + resp.imgBase64
 				});
 				modalBody.html(image);
 			},

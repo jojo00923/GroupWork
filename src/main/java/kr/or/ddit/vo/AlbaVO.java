@@ -15,7 +15,7 @@ public class AlbaVO implements Serializable{
 	private int rnum;
 	//@NotBlank(message = "회원 아이디 필수", groups = InsertHint.class)
 	private String al_id;
-	@NotBlank(message = "이름 필수")
+//	@NotBlank(message = "이름 필수")
 	private String al_name;
 	private Integer al_age;
 	private String al_address;
