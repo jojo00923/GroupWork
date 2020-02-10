@@ -58,7 +58,6 @@ public class AlbaLicenseImageController {
 		for(String key : keySet) {
 			System.out.println("key:" + key);
 		}
-//		
 		licAlba.setLic_image(blobAsBytes);
 		System.out.println("lic_image" + lic_image);
 		System.out.println("getLic_image" + licAlba.getLic_image());
