@@ -36,7 +36,4 @@ public class LicAlbaVO implements Serializable{
 		return Base64.encodeBase64String(lic_image);
 	}
 	
-	public void saveFile(File saveFolder) throws IOException {
-		part.saveFile(saveFolder);
-	}
 }

@@ -82,6 +82,7 @@
 				</c:url>
 				<input type="button" id="deleteBtn" value="삭제" class="btn btn-success" 
 						onclick="location.href='${albaDeleteURL}';"/>
+						
 				<input type="button" value="목록으로" class="btn btn-info" 
 					onclick="location.href='<c:url value="/alba/albaList.do"/>';"
 				/>
