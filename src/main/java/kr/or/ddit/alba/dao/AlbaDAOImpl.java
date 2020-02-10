@@ -109,5 +109,11 @@ public class AlbaDAOImpl implements IAlbaDAO {
 			return mapper.selectView(licAlba);
 		}
 	}
+
+	@Override
+	public LicAlbaVO selectLicense(LicAlbaVO licAlba) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

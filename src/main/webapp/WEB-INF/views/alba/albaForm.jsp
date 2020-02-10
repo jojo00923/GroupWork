@@ -112,6 +112,7 @@ ${errors}
 				<div class="lic-list"></div>
 			</td>
 		</tr>
+		<tr>
 		<!-- <tr>
 			<th>첨부파일</th>
 			<td>

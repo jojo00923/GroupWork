@@ -32,8 +32,9 @@ public class LicAlbaDAOImpl implements ILicAlbaDAO {
 
 	@Override
 	public int deleteLicAlba(AlbaVO alba, SqlSession sqlSession) {
-		// TODO Auto-generated method stub
-		return 0;
+		ILicAlbaDAO mapper = sqlSession.getMapper(ILicAlbaDAO.class);
+		int rowcnt = mapper.deleteLicAlba(alba);
+		return rowcnt;
 	}
 
 }

@@ -93,5 +93,10 @@ public class AlbaServiceImpl implements IAlbaService {
 		return albaDAO.selectView(licAlba);
 	}
 
+	@Override
+	public LicAlbaVO retrieveLicense(LicAlbaVO licAlba) {
+		return albaDAO.selectLicense(licAlba);
+	}
+
 	
 }

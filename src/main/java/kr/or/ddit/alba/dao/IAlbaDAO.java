@@ -23,5 +23,6 @@ public interface IAlbaDAO {
 	public List<GradeVO> selectGrade(); //학력
 	public List<LicAlbaVO> selectLIC(); //자격증
 	public HashMap<String, Object> selectView(LicAlbaVO licAlba);
+	public LicAlbaVO selectLicense(LicAlbaVO licAlba);
 	
 }

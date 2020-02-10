@@ -44,4 +44,20 @@ public class AlbaVO implements Serializable{
 	
 	private int rowcnt;
 	
+	private String[] licCodes;
+	
+	private String[] deleteLicCodes;
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
