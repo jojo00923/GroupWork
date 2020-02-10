@@ -45,23 +45,16 @@ public class AlbaLicenseImageController {
 		licAlba.setLic_code(lic_code);
 		
 		// DB에서 이미지 불러오기
-//		byte[] lic_image = service.readImage(licAlba);
-//		AlbaVO readImage = service.readImage(licAlba);
 		Map<String, Object> readImage = service.readImage(licAlba);
 		BLOB lic_image = (BLOB) readImage.get("LIC_IMAGE");
 		int blobLength = (int) lic_image.length(); 
 		byte[] blobAsBytes = lic_image.getBytes(1, blobLength);
-		System.out.println(readImage.get("LIC_IMAGE"));
-		System.out.println(lic_image);
 		
 		Set<String> keySet = readImage.keySet();
 		for(String key : keySet) {
 			System.out.println("key:" + key);
 		}
 		licAlba.setLic_image(blobAsBytes);
-		System.out.println("lic_image" + lic_image);
-		System.out.println("getLic_image" + licAlba.getLic_image());
-		System.out.println("getImgBase64" + licAlba.getImgBase64());
 		
 		// json 파일로 내보내기
 		if(StringUtils.containsIgnoreCase(accept, "json")) {

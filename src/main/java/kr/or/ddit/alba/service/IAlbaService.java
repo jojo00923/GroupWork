@@ -16,7 +16,7 @@ public interface IAlbaService {
 	public AlbaVO readAlba(String al_id);
 	public ServiceResult modifyAlba(AlbaVO alba);
 	public ServiceResult createAlba(AlbaVO alba);
-	public ServiceResult removeAlba(String al_id);
+	public ServiceResult removeAlba(AlbaVO alba);
 	public HashMap<String, Object> readImage(LicAlbaVO licAlba);
 
 }

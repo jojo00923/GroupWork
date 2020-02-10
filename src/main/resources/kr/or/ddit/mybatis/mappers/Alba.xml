@@ -120,9 +120,15 @@
 </select>
 
 
-<delete id="deleteAlba" parameterType="string">
+<!-- <delete id="deleteAlba" parameterType="string">
 	DELETE FROM ALBA
 	WHERE AL_ID = #{al_id}
+</delete> -->
+
+<delete id="deleteAlba" parameterType="albaVO" statementType="CALLABLE">
+	{
+		CALL DELETEALBA(#{al_id,mode=IN,javaType=String}, #{rowcnt,mode=OUT,jdbcType=INTEGER})
+	}
 </delete>
 
 <select id="selectView" parameterType="licAlbaVO" resultType="java.util.Map">

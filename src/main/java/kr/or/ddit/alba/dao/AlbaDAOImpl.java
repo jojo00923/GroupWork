@@ -71,12 +71,12 @@ public class AlbaDAOImpl implements IAlbaDAO {
 	}
 
 	@Override
-	public int deleteAlba(String al_id) {
+	public int deleteAlba(AlbaVO alba) {
 		try(
 			SqlSession sqlSession = sqlSessionFactory.openSession(true);	
 		){
 			IAlbaDAO mapper = sqlSession.getMapper(IAlbaDAO.class);
-			return mapper.deleteAlba(al_id);
+			return mapper.deleteAlba(alba);
 		}
 	}
 

@@ -19,7 +19,7 @@ public interface IAlbaDAO {
 	public int insertAlba(AlbaVO alba, SqlSession sqlSession);
 	public int updateAlba(AlbaVO alba);
 	public int updateAlba(AlbaVO alba, SqlSession sqlSession);
-	public int deleteAlba(String al_id);
+	public int deleteAlba(AlbaVO alba);
 	public List<GradeVO> selectGrade(); //학력
 	public List<LicAlbaVO> selectLIC(); //자격증
 	public HashMap<String, Object> selectView(LicAlbaVO licAlba);

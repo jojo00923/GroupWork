@@ -76,9 +76,9 @@ public class AlbaServiceImpl implements IAlbaService {
 	}
 
 	@Override
-	public ServiceResult removeAlba(String al_id) {
+	public ServiceResult removeAlba(AlbaVO alba) {
 		ServiceResult result = null;
-		int cnt =  albaDAO.deleteAlba(al_id);
+		int cnt =  albaDAO.deleteAlba(alba);
 		if(cnt>0) {
 			result = ServiceResult.OK;
 		}else {

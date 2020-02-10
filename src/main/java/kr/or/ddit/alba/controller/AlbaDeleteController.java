@@ -24,11 +24,13 @@ public class AlbaDeleteController {
 	@URIMapping(value="/alba/albaDelete.do",method=HttpMethod.GET)
 	public String delete(HttpServletRequest req, HttpServletResponse resp) {
 		
+		AlbaVO alba = new AlbaVO();
 		String al_id = req.getParameter("what");
+		alba.setAl_id(al_id);
 		
 		String goPage =null;
 		String message = null;
-		ServiceResult result = service.removeAlba(al_id);
+		ServiceResult result = service.removeAlba(alba);
 				switch (result) {
 				case OK:
 					message = "삭제 완료";
