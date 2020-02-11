@@ -22,8 +22,6 @@ public class AlbaServiceImpl implements IAlbaService {
 	IAlbaDAO albaDAO = new AlbaDAOImpl();
 	ILicAlbaDAO licAlbaDAO = new LicAlbaDAOImpl();
 	
-	File saveFolder = new File("d:/saveFiles");
-	
 	SqlSessionFactory sqlSessionFactory =
 			CustomSqlSessionFactoryBuilder.getSqlSessionFactory();
 
@@ -75,27 +73,35 @@ public class AlbaServiceImpl implements IAlbaService {
 		}
 	}
 
+//	@Override
+//	public ServiceResult removeAlba(AlbaVO alba) {
+//		ServiceResult result = null;
+//		int cnt =  albaDAO.deleteAlba(alba);
+//		if(cnt>0) {
+//			result = ServiceResult.OK;
+//		}else {
+//			result = ServiceResult.FAIL;
+//		}
+//		return result;
+//	}
 	@Override
 	public ServiceResult removeAlba(AlbaVO alba) {
-		ServiceResult result = null;
-		int cnt =  albaDAO.deleteAlba(alba);
-		if(cnt>0) {
-			result = ServiceResult.OK;
-		}else {
-			result = ServiceResult.FAIL;
+		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+			int rowCnt = albaDAO.deleteLicenses(alba, sqlSession);
+			rowCnt += albaDAO.deleteAlba(alba, sqlSession);
+			ServiceResult result = ServiceResult.FAIL;
+			if (rowCnt > 0) {
+				result = ServiceResult.OK;
+				sqlSession.commit();
+			}
+			return result;
 		}
-		return result;
 	}
 	
 
 	@Override
 	public HashMap<String, Object> readImage(LicAlbaVO licAlba) {
 		return albaDAO.selectView(licAlba);
-	}
-
-	@Override
-	public LicAlbaVO retrieveLicense(LicAlbaVO licAlba) {
-		return albaDAO.selectLicense(licAlba);
 	}
 
 	

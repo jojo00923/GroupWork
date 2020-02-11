@@ -18,6 +18,5 @@ public interface IAlbaService {
 	public ServiceResult createAlba(AlbaVO alba);
 	public ServiceResult removeAlba(AlbaVO alba);
 	public HashMap<String, Object> readImage(LicAlbaVO licAlba);
-	public LicAlbaVO retrieveLicense(LicAlbaVO licAlba);
 
 }

@@ -113,6 +113,40 @@ ${errors}
 			</td>
 		</tr>
 		<tr>
+		<tr>
+				<th>자격증</th>
+				<td>
+					<c:forEach items="${alba.licAlbaList }" var="licAlba" varStatus="vs">
+						<c:if test="${not empty licAlba.lic_code }">
+							<span>
+								${licAlba.lic_name } 
+								<input type="button" class="btn btn-info delBtn" value="삭제" 
+										data-code="${licAlba.lic_code }"/>
+								${!vs.last?"|":"" }
+							</span>
+						</c:if>
+					</c:forEach>
+				<div id="licenseArea" class="row">	
+					<div class="form-group col-6">
+						<select name="lic_codes" class="form-control" multiple size="6">
+							<c:forEach items="${licenses }" var="license">
+								<c:set var="matched" value="${false }"/>
+								<c:forEach items="${alba.licAlbaList }" var="licAlba">
+									<c:if test="${licAlba.lic_code eq license.lic_code }">
+										<c:set var="matched" value="${true }"/>
+									</c:if>
+								</c:forEach>
+								<option value="${license.lic_code }" class="${matched?'matched':'normal' }">${license.lic_name }</option>
+							</c:forEach>
+						</select>
+						<span class="error form-control-plaintext">${errors["lic_codes"] }</span>
+					</div>
+					<div id="imageArea" class="col-6">
+					
+					</div>
+				</div>
+				</td>
+			</tr>
 		<!-- <tr>
 			<th>첨부파일</th>
 			<td>
@@ -180,6 +214,67 @@ ${errors}
 						"name":"delAttNos"
 					}).val(attNo);
 		boardForm.append(input);
+	});
+	
+	$(function(){
+		let imageArea = $("#imageArea");
+		let licCodes = $("[name='licCodes']");
+		let albaForm = $("#albaForm").on("reset", function(){
+			imageArea.empty();
+			licCodes.nextAll("[name='licImages']").remove();
+		});
+		//기존 자격증 삭제 처리시 테스트 코드
+		$(".delBtn").on("click", function(){
+			var dellicCode = $(this).data("code");
+			albaForm.append(
+					$("<input>").attr({
+						type:"text"
+							, name:"deleteLicCodes"
+								, value:dellicCode
+					})
+			);
+			$(this).closest("span").remove();
+			$(licCodes).find("[value='"+dellicCode+"']").removeClass("matched");
+		});	
+		// 자격증 선택시, 이미지 태그 추가
+		licCodes.on("blur", function(){
+			$(this).nextAll("[name='licImages']").remove();
+			imageArea.empty();
+			var selectTag = $(this);
+			var options = $(this).val();
+			$(options).each(function(idx, optVal){
+				selectTag.after(
+						$("<input>").attr({
+							type:"file"
+								, 'class':"form-control"
+									, name:"licImages"
+										, required:true
+										, id:"file_"+idx
+						})	
+				);
+				imageArea.prepend(
+						$("<img>").hide()
+						.addClass("file_"+idx)
+						.css({width:"100px", height:"100px"}),
+						$("<br/>")		  
+				);
+			});
+		});
+		// 자격증 사본 미리보기
+		$("#licenseArea").on("change", "[type='file']", function(){
+			var files = $(this).prop("files");
+			var id = $(this).prop("id");
+			if(!files) return;
+			for(let idx=0; idx<files.length; idx++){
+				let reader = new FileReader();
+				reader.onloadend = function(event){
+					let imgTag = imageArea.find("."+id);
+					imgTag.attr("src", event.target.result);
+					imgTag.show();
+				}
+				reader.readAsDataURL(files[idx]);
+			}
+		});
 	});
 	
 </script>

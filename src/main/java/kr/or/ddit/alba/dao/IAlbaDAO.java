@@ -20,9 +20,9 @@ public interface IAlbaDAO {
 	public int updateAlba(AlbaVO alba);
 	public int updateAlba(AlbaVO alba, SqlSession sqlSession);
 	public int deleteAlba(AlbaVO alba);
+	public int deleteAlba(AlbaVO alba, SqlSession sqlSession);
 	public List<GradeVO> selectGrade(); //학력
 	public List<LicAlbaVO> selectLIC(); //자격증
 	public HashMap<String, Object> selectView(LicAlbaVO licAlba);
-	public LicAlbaVO selectLicense(LicAlbaVO licAlba);
-	
+	public int deleteLicenses(AlbaVO albaVO, SqlSession sqlSession);	
 }

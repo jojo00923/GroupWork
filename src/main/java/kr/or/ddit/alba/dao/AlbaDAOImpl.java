@@ -111,9 +111,15 @@ public class AlbaDAOImpl implements IAlbaDAO {
 	}
 
 	@Override
-	public LicAlbaVO selectLicense(LicAlbaVO licAlba) {
+	public int deleteLicenses(AlbaVO albaVO, SqlSession sqlSession) {
+		int rowCnt = sqlSession.delete("kr.or.ddit.alba.dao.IAlbaDAO.deleteLicenses", albaVO);
+		return rowCnt;
+	}
+
+	@Override
+	public int deleteAlba(AlbaVO alba, SqlSession sqlSession) {
 		// TODO Auto-generated method stub
-		return null;
+		return 0;
 	}
 	
 }

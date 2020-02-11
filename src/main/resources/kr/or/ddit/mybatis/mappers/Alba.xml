@@ -124,6 +124,18 @@
 	DELETE FROM ALBA
 	WHERE AL_ID = #{al_id}
 </delete> -->
+<delete id="deleteLicenses" parameterType="AlbaVO">
+		DELETE FROM LIC_ALBA
+		WHERE AL_ID = #{alId}
+		<if test="deleteLicCodes!=null and deleteLicCodes.length gt 0">
+			AND LIC_CODE IN 
+			<foreach collection="deleteLicCodes" item="delCode"
+				open="(" close=")" separator=","
+			>
+				#{delCode}
+			</foreach>
+		</if>
+</delete>	
 
 <delete id="deleteAlba" parameterType="albaVO" statementType="CALLABLE">
 	{

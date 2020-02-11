@@ -44,8 +44,10 @@ public class AlbaVO implements Serializable{
 	
 	private int rowcnt;
 	
+	// 요청 파라미터 바인드용
 	private String[] licCodes;
 	
+	// 라이센스 삭제용
 	private String[] deleteLicCodes;
 	
 }
